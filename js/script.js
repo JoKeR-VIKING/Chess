@@ -108,6 +108,7 @@ function blockClick(buttonId)
 
     if (playablePos.includes(buttonId) && mostRecent !== buttonId)
     {
+        let tempText = document.getElementById(mostRecent).innerText;
         block.innerText = document.getElementById(mostRecent).innerText;
         document.getElementById(mostRecent).innerText = "";
 
@@ -117,7 +118,7 @@ function blockClick(buttonId)
         {
             window.alert("Invalid Move! You are still or will be under check");
             document.getElementById(mostRecent).innerText = block.innerText;
-            block.innerText = "";
+            block.innerText = tempText;
             clearBoard();
             turn = !turn;
             return;
