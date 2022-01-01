@@ -21,6 +21,13 @@ map.set("\u265A", "king");
 map.set("\u2659", "pawn");
 map.set("\u265F", "pawn");
 
+function delay()
+{
+    return new Promise(function(resolve){
+        setTimeout(resolve,100);
+    });
+}
+
 function createBoard()
 {
     for (let i=8;i>=1;i--)
@@ -99,7 +106,7 @@ function fillBoard()
     }
 }
 
-function blockClick(buttonId)
+async function blockClick(buttonId)
 {
     if (win)
         return;
@@ -164,6 +171,9 @@ function blockClick(buttonId)
             document.getElementsByClassName("player-one")[0].innerHTML = "Player 1";
             document.getElementsByClassName("player-two")[0].innerHTML = "Player 2";
         }
+        
+        new Audio("sounds/piece-slide.mp3").play();
+        await delay();
 
         if (turn)
         {
