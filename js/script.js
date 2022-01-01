@@ -236,7 +236,7 @@ function checkMate(possibleChecks)
         if (possibleChecks.length === 2)
         {
             turn = !turn;
-            if (checkCheck(parseInt(possibleChecks[1][0]), possibleChecks[1][1]))
+            if (checkCheck(parseInt(possibleChecks[1][0]), possibleChecks[1][1])[0])
             {
                 turn = !turn;
                 return false;
@@ -250,7 +250,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -261,7 +269,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -275,7 +291,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i++)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -286,7 +304,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i--)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -301,12 +321,20 @@ function checkMate(possibleChecks)
 
                 if (row < parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -318,12 +346,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) > possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -335,12 +371,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -352,12 +396,20 @@ function checkMate(possibleChecks)
                 }
                 else
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -378,7 +430,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -389,7 +449,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -403,7 +471,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i++)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -414,7 +484,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i--)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -424,12 +496,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row < parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -441,12 +521,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) > possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -458,12 +546,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -475,12 +571,20 @@ function checkMate(possibleChecks)
                 }
                 else
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i+1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -498,53 +602,53 @@ function checkMate(possibleChecks)
         i = row - 1;
         if (i <= 0 || blackPieces.includes(document.getElementById(i + col).innerText))
         {}
-        else if (!checkCheck(i, col))
+        else if (!checkCheck(i, col)[0])
             return false;
 
         i = row + 1;
         if (i > 8 || blackPieces.includes(document.getElementById(i + col).innerText))
         {}
-        else if (!checkCheck(i, col))
+        else if (!checkCheck(i, col)[0])
             return false;
 
         j = String.fromCharCode(col.charCodeAt(0) - 1);
         if (j === "@" || blackPieces.includes(document.getElementById(row + j).innerText))
         {}
-        else if (!checkCheck(row, j))
+        else if (!checkCheck(row, j)[0])
             return false;
 
         j = String.fromCharCode(col.charCodeAt(0) + 1);
         if (j === "I" || blackPieces.includes(document.getElementById(row + j).innerText))
         {}
-        else if (!checkCheck(row, j))
+        else if (!checkCheck(row, j)[0])
             return false;
 
         i = row + 1;
         j = String.fromCharCode(col.charCodeAt(0) + 1);
         if (i > 8 || j === "I" || blackPieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
 
         i = row - 1;
         j = String.fromCharCode(col.charCodeAt(0) - 1);
         if (i <= 0 || j === "@" || blackPieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
 
         i = row + 1;
         j = String.fromCharCode(col.charCodeAt(0) - 1);
         if (i > 8 || j === "@" || blackPieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
 
         i = row - 1;
         j = String.fromCharCode(col.charCodeAt(0) + 1);
         if (i <= 0 || j === "I" || blackPieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
     }
     else
@@ -552,7 +656,7 @@ function checkMate(possibleChecks)
         if (possibleChecks.length === 2)
         {
             turn = !turn;
-            if (checkCheck(parseInt(possibleChecks[1][0]), possibleChecks[1][1]))
+            if (checkCheck(parseInt(possibleChecks[1][0]), possibleChecks[1][1])[0])
             {
                 turn = !turn;
                 return false;
@@ -566,7 +670,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -577,7 +689,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -591,7 +711,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i++)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -602,7 +724,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i--)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -617,12 +741,20 @@ function checkMate(possibleChecks)
 
                 if (row < parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -634,12 +766,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) > possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -651,12 +791,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -668,12 +816,20 @@ function checkMate(possibleChecks)
                 }
                 else
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -694,7 +850,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -705,7 +869,15 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (checkCheck(row, i))
+                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+
+                            let tempCheck = checkCheck(row, i);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -719,7 +891,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i++)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -730,7 +904,9 @@ function checkMate(possibleChecks)
                     {
                         for (let i=row;i!==parseInt(possibleChecks[1][1]);i--)
                         {
-                            if (checkCheck(i, col))
+                            let tempCheck = checkCheck(i, col);
+
+                            if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -740,12 +916,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row < parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -757,12 +941,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) > possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -774,12 +966,20 @@ function checkMate(possibleChecks)
                 }
                 else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
                 {
-                    i = row;
-                    j = col;
+                    i = row - 1;
+                    j = String.fromCharCode(col.charCodeAt(0) + 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -791,12 +991,20 @@ function checkMate(possibleChecks)
                 }
                 else
                 {
-                    i = row;
-                    j = col;
+                    i = row + 1;
+                    j = String.fromCharCode(col.charCodeAt(0) - 1);
 
-                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    while (i !== parseInt(possibleChecks[1][0]) && j !== possibleChecks[1][1])
                     {
-                        if (checkCheck(i, j))
+                        if (i !== 1 && map.get(document.getElementById((i-1) + j).innerText) === "pawn")
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        let tempCheck = checkCheck(i, j);
+
+                        if (tempCheck[0] && map.get(document.getElementById(tempCheck[1]).innerText) !== "pawn")
                         {
                             turn = !turn;
                             return false;
@@ -810,57 +1018,57 @@ function checkMate(possibleChecks)
         }
 
         turn = !turn;
-        
+
         i = row - 1;
         if (i <= 0 || whitePieces.includes(document.getElementById(i + col).innerText))
         {}
-        else if (!checkCheck(i, col))
+        else if (!checkCheck(i, col)[0])
             return false;
 
         i = row + 1;
         if (i > 8 || whitePieces.includes(document.getElementById(i + col).innerText))
         {}
-        else if (!checkCheck(i, col))
+        else if (!checkCheck(i, col)[0])
             return false;
 
         j = String.fromCharCode(col.charCodeAt(0) - 1);
         if (j === "@" || whitePieces.includes(document.getElementById(row + j).innerText))
         {}
-        else if (!checkCheck(row, j))
+        else if (!checkCheck(row, j)[0])
             return false;
 
         j = String.fromCharCode(col.charCodeAt(0) + 1);
         if (j === "I" || whitePieces.includes(document.getElementById(row + j).innerText))
         {}
-        else if (!checkCheck(row, j))
+        else if (!checkCheck(row, j)[0])
             return false;
 
         i = row + 1;
         j = String.fromCharCode(col.charCodeAt(0) + 1);
         if (i > 8 || j === "I" || whitePieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
 
         i = row - 1;
         j = String.fromCharCode(col.charCodeAt(0) - 1);
         if (i <= 0 || j === "@" || whitePieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
 
         i = row + 1;
         j = String.fromCharCode(col.charCodeAt(0) - 1);
         if (i > 8 || j === "@" || whitePieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
 
         i = row - 1;
         j = String.fromCharCode(col.charCodeAt(0) + 1);
         if (i <= 0 || j === "I" || whitePieces.includes(document.getElementById(i + j).innerText))
         {}
-        else if (!checkCheck(i, j))
+        else if (!checkCheck(i, j)[0])
             return false;
     }
 
