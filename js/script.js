@@ -143,6 +143,7 @@ async function blockClick(buttonId)
         {
             if (checkMate(possibleChecks))
             {
+                new Audio("sounds/win.wav").play();
                 window.alert("🎉🎉🎉CHECKMATE🎉🎉🎉\n" + (turn ? "🎉🎉Player One Wins!🎉🎉" : "🎉🎉Player Two Wins!🎉🎉"));
 
                 if (turn)
