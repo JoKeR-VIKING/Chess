@@ -549,6 +549,268 @@ function checkMate(possibleChecks)
     }
     else
     {
+        if (possibleChecks.length === 2)
+        {
+            turn = !turn;
+            if (checkCheck(parseInt(possibleChecks[1][0]), possibleChecks[1][1]))
+            {
+                turn = !turn;
+                return false;
+            }
+
+            if (map.get(document.getElementById(possibleChecks[1]).innerText) === "rook")
+            {
+                if (row === parseInt(possibleChecks[1][0]))
+                {
+                    if (col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
+                    {
+                        for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
+                        {
+                            if (checkCheck(row, i))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
+                        {
+                            if (checkCheck(row, i))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (row < parseInt(possibleChecks[1][0]))
+                    {
+                        for (let i=row;i!==parseInt(possibleChecks[1][1]);i++)
+                        {
+                            if (checkCheck(i, col))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i=row;i!==parseInt(possibleChecks[1][1]);i--)
+                        {
+                            if (checkCheck(i, col))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (map.get(document.getElementById(possibleChecks[1]).innerText) === "bishop")
+            {
+                let i, j;
+
+                if (row < parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i++;
+                        j = String.fromCharCode(j.charCodeAt(0) + 1);
+                    }
+                }
+                else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) > possibleChecks[1][1].charCodeAt(0))
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i--;
+                        j = String.fromCharCode(j.charCodeAt(0) - 1);
+                    }
+                }
+                else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i--;
+                        j = String.fromCharCode(j.charCodeAt(0) + 1);
+                    }
+                }
+                else
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i++;
+                        j = String.fromCharCode(j.charCodeAt(0) - 1);
+                    }
+                }
+            }
+            else
+            {
+                let i, j;
+
+                if (row === parseInt(possibleChecks[1][0]))
+                {
+                    if (col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
+                    {
+                        for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
+                        {
+                            if (checkCheck(row, i))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
+                        {
+                            if (checkCheck(row, i))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else if (col === possibleChecks[1][1])
+                {
+                    if (row < parseInt(possibleChecks[1][0]))
+                    {
+                        for (let i=row;i!==parseInt(possibleChecks[1][1]);i++)
+                        {
+                            if (checkCheck(i, col))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (let i=row;i!==parseInt(possibleChecks[1][1]);i--)
+                        {
+                            if (checkCheck(i, col))
+                            {
+                                turn = !turn;
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else if (row < parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i++;
+                        j = String.fromCharCode(j.charCodeAt(0) + 1);
+                    }
+                }
+                else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) > possibleChecks[1][1].charCodeAt(0))
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i--;
+                        j = String.fromCharCode(j.charCodeAt(0) - 1);
+                    }
+                }
+                else if (row > parseInt(possibleChecks[1][0]) && col.charCodeAt(0) < possibleChecks[1][1].charCodeAt(0))
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i--;
+                        j = String.fromCharCode(j.charCodeAt(0) + 1);
+                    }
+                }
+                else
+                {
+                    i = row;
+                    j = col;
+
+                    while (row !== parseInt(possibleChecks[1][0]) && col !== possibleChecks[1][1])
+                    {
+                        if (checkCheck(i, j))
+                        {
+                            turn = !turn;
+                            return false;
+                        }
+
+                        i++;
+                        j = String.fromCharCode(j.charCodeAt(0) - 1);
+                    }
+                }
+            }
+        }
+
+        turn = !turn;
+        
         i = row - 1;
         if (i <= 0 || whitePieces.includes(document.getElementById(i + col).innerText))
         {}
