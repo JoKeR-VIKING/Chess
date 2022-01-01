@@ -21,13 +21,6 @@ map.set("\u265A", "king");
 map.set("\u2659", "pawn");
 map.set("\u265F", "pawn");
 
-function delay()
-{
-    return new Promise(function(resolve){
-        setTimeout(resolve,100);
-    });
-}
-
 function createBoard()
 {
     for (let i=8;i>=1;i--)
@@ -106,6 +99,13 @@ function fillBoard()
     }
 }
 
+function delay()
+{
+    return new Promise(function(resolve){
+        setTimeout(resolve,100);
+    });
+}
+
 async function blockClick(buttonId)
 {
     if (win)
@@ -115,7 +115,7 @@ async function blockClick(buttonId)
 
     if (playablePos.includes(buttonId) && mostRecent !== buttonId)
     {
-        let tempText = block.innerText;
+        let tempText = document.getElementById(mostRecent).innerText;
         block.innerText = document.getElementById(mostRecent).innerText;
         document.getElementById(mostRecent).innerText = "";
 
@@ -145,7 +145,7 @@ async function blockClick(buttonId)
             {
                 new Audio("sounds/win.wav").play();
                 await delay();
-                window.alert("🎉🎉🎉CHECKMATE🎉🎉🎉\n" + (turn ? "🎉🎉Player One Wins!🎉🎉" : "🎉🎉Player Two Wins!🎉🎉"));
+                window.alert("CHECKMATE🎉🎉🎉\n" + (turn ? "🎉🎉Player One Wins!🎉🎉" : "🎉🎉Player Two Wins!🎉🎉"));
 
                 if (turn)
                     document.getElementsByClassName("player-one")[0].innerHTML = "Check Mate";
@@ -173,7 +173,7 @@ async function blockClick(buttonId)
             document.getElementsByClassName("player-one")[0].innerHTML = "Player 1";
             document.getElementsByClassName("player-two")[0].innerHTML = "Player 2";
         }
-        
+
         new Audio("sounds/piece-slide.mp3").play();
         await delay();
 
@@ -675,8 +675,12 @@ function checkCheck(row, col)
         if (i === 0 || j === "@" || blackPieces.includes(document.getElementById(i + j).innerText))
         {}
         else if (map.get(document.getElementById(i + j).innerText) === "bishop" ||
-            map.get(document.getElementById(i + j).innerText) === "queen" ||
-            map.get(document.getElementById(i + j).innerText) === "pawn")
+            map.get(document.getElementById(i + j).innerText) === "queen")
+        {
+            possibleChecks[0] = true;
+            possibleChecks.push(i + j);
+        }
+        else if (map.get(document.getElementById(i + j).innerText) === "pawn" && i === row - 1 && j === String.fromCharCode(col.charCodeAt(0) - 1))
         {
             possibleChecks[0] = true;
             possibleChecks.push(i + j);
@@ -727,8 +731,12 @@ function checkCheck(row, col)
         if (i === 0 || j === "I" || blackPieces.includes(document.getElementById(i + j).innerText))
         {}
         else if (map.get(document.getElementById(i + j).innerText) === "bishop" ||
-            map.get(document.getElementById(i + j).innerText) === "queen" ||
-            map.get(document.getElementById(i + j).innerText) === "pawn")
+            map.get(document.getElementById(i + j).innerText) === "queen")
+        {
+            possibleChecks[0] = true;
+            possibleChecks.push(i + j);
+        }
+        else if (map.get(document.getElementById(i + j).innerText) === "pawn" && i === row - 1 && j === String.fromCharCode(col.charCodeAt(0) + 1))
         {
             possibleChecks[0] = true;
             possibleChecks.push(i + j);
@@ -896,8 +904,12 @@ function checkCheck(row, col)
         if (i === 9 || j === "I" || whitePieces.includes(document.getElementById(i + j).innerText))
         {}
         else if (map.get(document.getElementById(i + j).innerText) === "bishop" ||
-            map.get(document.getElementById(i + j).innerText) === "queen" ||
-            map.get(document.getElementById(i + j).innerText) === "pawn")
+            map.get(document.getElementById(i + j).innerText) === "queen")
+        {
+            possibleChecks[0] = true;
+            possibleChecks.push(i + j);
+        }
+        else if (map.get(document.getElementById(i + j).innerText) === "pawn" && i === row + 1 && j === String.fromCharCode(col.charCodeAt(0) + 1))
         {
             possibleChecks[0] = true;
             possibleChecks.push(i + j);
@@ -914,8 +926,12 @@ function checkCheck(row, col)
         if (i === 9 || j === "@" || whitePieces.includes(document.getElementById(i + j).innerText))
         {}
         else if (map.get(document.getElementById(i + j).innerText) === "bishop" ||
-            map.get(document.getElementById(i + j).innerText) === "queen" ||
-            map.get(document.getElementById(i + j).innerText) === "pawn")
+            map.get(document.getElementById(i + j).innerText) === "queen")
+        {
+            possibleChecks[0] = true;
+            possibleChecks.push(i + j);
+        }
+        else if (map.get(document.getElementById(i + j).innerText) === "pawn" && i === row + 1 && j === String.fromCharCode(col.charCodeAt(0) - 1))
         {
             possibleChecks[0] = true;
             possibleChecks.push(i + j);
