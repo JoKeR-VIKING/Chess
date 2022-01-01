@@ -16,8 +16,17 @@
         <div class="playerOne">
             <h1 class="player-title player-one">Player 1</h1>
             <button class="newGame" onclick="newGame()">New Game</button>
-            <button class="concede" onclick="concede()">Concede</button>
             <button class="draw" onclick="draw()">Declare Draw</button>
+            <div class="castling">
+                <button class="white-castling" id="long-white" onclick="castling(this.id)">Long Castling</button>
+                <button class="white-castling" id="short-white" onclick="castling(this.id)">Short Castling</button>
+            </div>
+            <select class="substitute-white">
+                <option value="&#x2655;">&#x2655;</option>
+                <option value="&#x2656;">&#x2656;</option>
+                <option value="&#x2657;">&#x2657;</option>
+                <option value="&#x2658;">&#x2658;</option>
+            </select>
         </div>
 
         <div class="board"></div>
@@ -25,11 +34,21 @@
         <div class="playerTwo">
             <h1 class="player-title player-two">Player 2</h1>
             <button class="newGame" onclick="newGame()">New Game</button>
-            <button class="concede" onclick="concede()">Concede</button>
             <button class="draw" onclick="draw()">Declare Draw</button>
+            <div class="castling">
+                <button class="black-castling" id="long-black" onclick="castling(this.id)">Long Castling</button>
+                <button class="black-castling" id="short-black" onclick="castling(this.id)">Short Castling</button>
+            </div>
+            <select class="substitute-black">
+                <option value="&#x265B;">&#x265B;</option>
+                <option value="&#x265C;">&#x265C;</option>
+                <option value="&#x265D;">&#x265D;</option>
+                <option value="&#x265E;">&#x265E;</option>
+            </select>
         </div>
     </div>
 
     <script src="js/script.js"></script>
 </body>
 </html>
+
