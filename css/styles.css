@@ -1,0 +1,139 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    color: #FFF;
+}
+
+body
+{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #262421;
+}
+
+.main
+{
+    width: 700px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid sandybrown;
+}
+
+.title
+{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.white, .black
+{
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    justify-self: flex-end;
+    color: #262421;
+}
+
+.white
+{
+    background-color: limegreen;
+}
+
+.black
+{
+    background-color: red;
+}
+
+.board
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    transition: 1s all ease-in-out;
+}
+
+.board-block
+{
+    width: 12.2%;
+    height: 12.2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1A1A1A;
+    font-size: 2.5rem;
+}
+
+.board-block:hover
+{
+    cursor: pointer;
+}
+
+.player-title
+{
+    width: 44px;
+    height: 450px;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+}
+
+.playerOne, .playerTwo
+{
+    position: absolute;
+    top: 6%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.playerOne
+{
+    left: 10%;
+}
+
+.playerOne button
+{
+    background-color: sandybrown;
+}
+
+.playerTwo
+{
+    right: 10%;
+}
+
+.playerTwo button
+{
+    background-color: saddlebrown;
+}
+
+.newGame, .concede, .draw
+{
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}

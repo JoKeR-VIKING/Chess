@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/chess.png">
+    <title>Chess</title>
+</head>
+<body>
+    <div class="main">
+        <div class="title">
+            <button class="white" id="white">White</button>
+            <h3>Chess</h3>
+            <button class="black" id="black">Black</button>
+        </div>
+        <div class="playerOne">
+            <h1 class="player-title player-one">Player 1</h1>
+            <button class="newGame" onclick="newGame()">New Game</button>
+            <button class="concede" onclick="concede()">Concede</button>
+            <button class="draw" onclick="draw()">Declare Draw</button>
+        </div>
+
+        <div class="board"></div>
+
+        <div class="playerTwo">
+            <h1 class="player-title player-two">Player 2</h1>
+            <button class="newGame" onclick="newGame()">New Game</button>
+            <button class="concede" onclick="concede()">Concede</button>
+            <button class="draw" onclick="draw()">Declare Draw</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
