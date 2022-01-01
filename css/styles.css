@@ -105,6 +105,33 @@ body
     text-transform: uppercase;
 }
 
+@media only screen and (max-width: 1200px)
+{
+    .playerOne
+    {
+        top: 120%;
+        flex-direction: row;
+    }
+
+    .playerTwo
+    {
+        top: 170%;
+        flex-direction: row;
+    }
+
+    .player-title
+    {
+        writing-mode: horizontal-tb;
+        text-orientation: sideways;
+    }
+
+    .board-block
+    {
+        width: 12%;
+        height: 12%;
+    }
+}
+
 .playerOne
 {
     left: 10%;
