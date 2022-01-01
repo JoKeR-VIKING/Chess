@@ -3,6 +3,8 @@ let map = new Map();
 let turn = true;
 let win = false;
 let mostRecent = "";
+let blackKingMoved = false, whiteKingMoved = false;
+let blackRookMovedOne = false, blackRookMovedTwo = false, whiteRookMovedOne = false, whiteRookMovedTwo = false;
 
 let whitePieces = ["\u2656", "\u2658", "\u2657", "\u2655", "\u2654", "\u2659"];
 let blackPieces = ["\u265C", "\u265E", "\u265D", "\u265B", "\u265A", "\u265F"];
@@ -45,6 +47,7 @@ function createBoard()
             else
                 block.style.backgroundColor = "saddlebrown";
 
+            block.style.userSelect = "none";
             alternate = !alternate;
         }
     }
@@ -99,6 +102,152 @@ function fillBoard()
     }
 }
 
+function castling(id)
+{
+    clearBoard();
+
+    if (id === "long-black")
+    {
+        if (blackKingMoved || blackRookMovedOne)
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        let x = document.getElementById("8B");
+        let y = document.getElementById("8C");
+        let z = document.getElementById("8D");
+
+        if (x.innerText !== "" || y.innerText !== "" || z.innerText !== "")
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        document.getElementById("8C").innerText = document.getElementById("8E").innerText;
+        document.getElementById("8E").innerText = "";
+
+        document.getElementById("8D").innerText = document.getElementById("8A").innerText;
+        document.getElementById("8A").innerText = "";
+
+        blackRookMovedOne = blackKingMoved = true;
+        makeTurn();
+    }
+    else if (id === "short-black")
+    {
+        if (blackKingMoved || blackRookMovedTwo)
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        let x = document.getElementById("8F");
+        let y = document.getElementById("8G");
+
+        if (x.innerText !== "" || y.innerText !== "")
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        document.getElementById("8G").innerText = document.getElementById("8E").innerText;
+        document.getElementById("8E").innerText = "";
+
+        document.getElementById("8F").innerText = document.getElementById("8H").innerText;
+        document.getElementById("8H").innerText = "";
+
+        blackRookMovedTwo = blackKingMoved = true;
+        makeTurn();
+    }
+    else if (id === "long-white")
+    {
+        if (whiteKingMoved || whiteRookMovedOne)
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        let x = document.getElementById("1B");
+        let y = document.getElementById("1C");
+        let z = document.getElementById("1D");
+
+        if (x.innerText !== "" || y.innerText !== "" || z.innerText !== "")
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        document.getElementById("1C").innerText = document.getElementById("1E").innerText;
+        document.getElementById("1E").innerText = "";
+
+        document.getElementById("1D").innerText = document.getElementById("1A").innerText;
+        document.getElementById("1A").innerText = "";
+
+        whiteRookMovedOne = whiteKingMoved = true;
+        makeTurn();
+    }
+    else
+    {
+        if (whiteKingMoved || whiteRookMovedTwo)
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        let x = document.getElementById("1F");
+        let y = document.getElementById("1G");
+
+        if (x.innerText !== "" || y.innerText !== "")
+        {
+            alert("Cannot perform castling...");
+            return;
+        }
+
+        document.getElementById("1G").innerText = document.getElementById("1E").innerText;
+        document.getElementById("1E").innerText = "";
+
+        document.getElementById("1F").innerText = document.getElementById("1H").innerText;
+        document.getElementById("1H").innerText = "";
+
+        whiteRookMovedTwo = whiteKingMoved = true;
+        makeTurn();
+    }
+}
+
+async function makeTurn()
+{
+    new Audio("sounds/piece-slide.mp3").play();
+    await delay();
+
+    if (turn)
+    {
+        document.getElementsByClassName("board")[0].style.transform = "rotate(180deg)";
+        let arr = document.getElementsByClassName("board-block");
+        for (let i=0;i<arr.length;i++)
+            arr[i].style.transform = "rotate(180deg)";
+    }
+    else
+    {
+        document.getElementsByClassName("board")[0].style.transform = "rotate(0)";
+        let arr = document.getElementsByClassName("board-block");
+        for (let i=0;i<arr.length;i++)
+            arr[i].style.transform = "rotate(0)";
+    }
+
+    turn = !turn;
+
+    if (turn)
+    {
+        document.getElementById("white").style.backgroundColor = "limegreen";
+        document.getElementById("black").style.backgroundColor = "red";
+    }
+    else
+    {
+        document.getElementById("white").style.backgroundColor = "red";
+        document.getElementById("black").style.backgroundColor = "limegreen";
+    }
+}
+
 function delay()
 {
     return new Promise(function(resolve){
@@ -132,6 +281,33 @@ async function blockClick(buttonId)
         }
         turn = !turn;
 
+        if (block.innerText === "\u265A")
+            blackKingMoved = true;
+        else if (block.innerText === "\u2654")
+            whiteKingMoved = true;
+        else if (block.innerText === "\u2656")
+        {
+            if (block.id[1] === "A")
+                whiteRookMovedOne = true;
+            else
+                whiteRookMovedTwo = true;
+        }
+        else if (block.innerText === "\u265C")
+        {
+            if (block.id[1] === "A")
+                blackRookMovedOne = true;
+            else
+                blackRookMovedTwo = true;
+        }
+
+        if ((buttonId[0] === "1" || buttonId[0] === "8") && map.get(block.innerText) === "pawn")
+        {
+            if (blackPieces.includes(block.innerText))
+                block.innerText = document.getElementsByClassName("substitute-black")[0].value;
+            else
+                block.innerText = document.getElementsByClassName("substitute-white")[0].value;
+        }
+
         if (!turn)
             block.style.color = "#1A1A1A";
         else
@@ -146,11 +322,6 @@ async function blockClick(buttonId)
                 new Audio("sounds/win.wav").play();
                 await delay();
                 window.alert("CHECKMATE🎉🎉🎉\n" + (turn ? "🎉🎉Player One Wins!🎉🎉" : "🎉🎉Player Two Wins!🎉🎉"));
-
-                if (turn)
-                    document.getElementsByClassName("player-one")[0].innerHTML = "Check Mate";
-                else
-                    document.getElementsByClassName("player-two")[0].innerHTML = "Check Mate";
 
                 clearBoard();
                 win = true;
@@ -250,7 +421,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -269,7 +440,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -430,7 +601,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -449,7 +620,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row+1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -670,7 +841,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -689,7 +860,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -850,7 +1021,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) + 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -869,7 +1040,7 @@ function checkMate(possibleChecks)
                     {
                         for (let i=col;i!==possibleChecks[1][1];i = String.fromCharCode(possibleChecks[1][1].charCodeAt(0) - 1))
                         {
-                            if (row !== 1 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
+                            if (row !== 8 && map.get(document.getElementById((row-1) + i).innerText) === "pawn")
                             {
                                 turn = !turn;
                                 return false;
@@ -2486,16 +2657,6 @@ function newGame()
 function draw()
 {
     window.alert("Match is Declared Draw!\nStarting New Game...");
-    window.location.reload();
-}
-
-function concede()
-{
-    if (turn)
-        window.alert("Player One Concedes Defeat!\n🎉🎉Player Two Wins!🎉🎉")
-    else
-        window.alert("Player Two Concedes Defeat!\n🎉🎉Player One Wins!🎉🎉")
-
     window.location.reload();
 }
 
