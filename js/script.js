@@ -115,7 +115,7 @@ async function blockClick(buttonId)
 
     if (playablePos.includes(buttonId) && mostRecent !== buttonId)
     {
-        let tempText = document.getElementById(mostRecent).innerText;
+        let tempText = block.innerText;
         block.innerText = document.getElementById(mostRecent).innerText;
         document.getElementById(mostRecent).innerText = "";
 
