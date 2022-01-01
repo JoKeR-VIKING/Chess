@@ -135,7 +135,7 @@ function blockClick(buttonId)
         {
             if (checkMate(possibleChecks))
             {
-                window.alert("CHECKMATE🎉🎉🎉\n" + (turn ? "🎉🎉Player One Wins!🎉🎉" : "🎉🎉Player Two Wins!🎉🎉"));
+                window.alert("🎉🎉🎉CHECKMATE🎉🎉🎉\n" + (turn ? "🎉🎉Player One Wins!🎉🎉" : "🎉🎉Player Two Wins!🎉🎉"));
 
                 if (turn)
                     document.getElementsByClassName("player-one")[0].innerHTML = "Check Mate";
