@@ -35,7 +35,7 @@ body
     text-transform: uppercase;
 }
 
-.white, .black
+.white, .black, .white-castling, .black-castling
 {
     width: 50px;
     height: 50px;
@@ -90,15 +90,16 @@ body
 .player-title
 {
     width: 44px;
-    height: 450px;
+    height: 357px;
     writing-mode: vertical-lr;
     text-orientation: upright;
+    user-select: none;
 }
 
 .playerOne, .playerTwo
 {
     position: absolute;
-    top: 6%;
+    top: 3%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -157,10 +158,53 @@ body
     cursor: pointer;
     width: 100px;
     height: 50px;
-    margin-top: 20px;
+    margin-top: 30px;
     border-radius: 5px;
     border: none;
     outline: none;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.castling
+{
+    width: 150px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.black-castling, .white-castling
+{
+    width: 100px;
+    height: 50px;
+    margin-right: 10px;
+    color: #FFF;
+}
+
+.substitute-black, .substitute-white
+{
+    width: 100px;
+    height: 50px;
+    margin-top: 30px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.7rem;
+}
+
+.substitute-black
+{
+    background-color: saddlebrown;
+    color: #262421;
+}
+
+.substitute-black option
+{
+    color: #262421;
+}
+
+.substitute-white
+{
+    background-color: sandybrown;
 }
